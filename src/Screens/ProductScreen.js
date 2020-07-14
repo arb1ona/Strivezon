@@ -18,7 +18,7 @@ function HomeScreen(props) {
             <div>
 
                 <Row className="details1" id="parent">
-                    <div class="divider-new" />
+                    <div className="divider-new" />
                     <Col className="details-image" size="12" sm="6" lg="8">
                         <img src={product.image} alt="product"></img>
                     </Col>
