@@ -1,4 +1,6 @@
-## DEBUGGING
+# DEBUGGING
+
+## MONGODB & MONGOOSE
 
 ### 1. Connect ECONNREFUSED 127.0.0.1:27017
 This happened probably because the MongoDB service isn't started. Follow the below steps to start it:
