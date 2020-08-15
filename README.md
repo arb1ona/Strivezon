@@ -10,4 +10,5 @@ This happened probably because the MongoDB service isn't started. Follow the bel
 
 
 
+
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
