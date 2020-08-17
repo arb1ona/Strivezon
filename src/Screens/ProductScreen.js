@@ -1,90 +1,126 @@
-import React from 'react'
-import data from '../data'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
-// import FontAwesome from 'react-fontawesome'
-// import { fas } from 'react-fontawesome';
+import { useSelector, useDispatch } from 'react-redux'
+import { detailsProduct } from '../actions/productActions'
+import Rating from '../components/Rating';
 
-function HomeScreen(props) {
-    console.log(props.match.params.id)
-    const product = data.products.find(x => x._id === props.match.params.id)
+
+function ProductScreen(props) {
+    const [qty, setQty] = useState(1)
+    const productDetails = useSelector(state => state.productDetails)
+    const { product, loading, error } = productDetails;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(detailsProduct(props.match.params.id))
+        return () => {
+            //
+        }
+    }, [])
+
+    const handleAddToCart = () => {
+        props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
+    }
     return (
         <>
-            <Link to="/">
+            {/* <Link to="/">
                 <button className="border">
                     <div className="fa fa-arrow-left" ></div>
                 </button>
-            </Link>
-            <div>
+            </Link> */}
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>{error} </div>
+            ) : (
+                        <>
+                            <div>
+                                <Row className="details1" id="parent">
+                                    <div className="divider-new" />
+                                    <Col className="details-image" size="12" sm="6" lg="8">
+                                        <img src={product.image} alt="product"></img>
+                                    </Col>
+                                    <div className="divider-new" />
+                                    <Col className="details-info" size="6" lg="4">
+                                        <div className="product-name-space">
+                                            <div >
+                                                <h1>{product.name}</h1>
+                                            </div>
+                                            <div className="armani">
+                                                <img src={product.shopImage} alt="logo"></img>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="rating">
+                                                <div className="product-rating">
+                                                    <Rating
+                                                        value={product.rating}
+                                                        text={product.numReviews + ' reviews'}
+                                                    />
+                                                </div>
+                                            </div>
 
-                <Row className="details1" id="parent">
-                    <div className="divider-new" />
-                    <Col className="details-image" size="12" sm="6" lg="8">
-                        <img src={product.image} alt="product"></img>
-                    </Col>
-                    <div class="divider-new" />
-                    <Col className="details-info" size="6" lg="4">
-                        <div className="product-name-space">
-                            <div >
-                                <h1>{product.name}</h1>
-                            </div>
-                            <div className="armani">
-                                <img src={product.shopImage} alt="logo"></img>
-                            </div>
-                        </div>
-                        <ul>
-                            <li>
-                                {product.rating} Stars ({product.numReviews} Reviews)
-                        </li>
-                            <li className="description">{product.description}</li>
-                        </ul>
+                                            <div className="description mt-3">{product.description}</div>
+                                        </div>
 
-                        <div className="w3-show-inline-block ">
-                            <div className="w3-bar">
-                                <button className="w3-btnr"><h3>XS</h3></button>
-                                <div className="divider" />
-                                <button className="w3-btnr"><h3>S</h3></button>
-                                <div className="divider" />
-                                <button className="w3-btnr"><h3>M</h3></button>
-                                <div className="divider" />
-                                <button className="w3-btnr"><h3>L</h3></button>
-                                <div className="divider" />
-                                <button className="w3-btnr"><h3>XL</h3></button>
-                                <div className="divider" />
-                                <button className="w3-btnr"><h3>XXL</h3></button>
+                                        <div className="w3-show-inline-block ">
+                                            <div className="w3-bar">
+                                                <button className="w3-btnr"><h2>XS</h2></button>
+                                                <div className="divider" />
+                                                <button className="w3-btnr"><h2>S</h2></button>
+                                                <div className="divider" />
+                                                <button className="w3-btnr"><h2>M</h2></button>
+                                                <div className="divider" />
+                                                <button className="w3-btnr"><h2>L</h2></button>
+                                                <div className="divider" />
+                                                <button className="w3-btnr"><h2>XL</h2></button>
+                                                <div className="divider" />
+                                                <button className="w3-btnr"><h2>XXL</h2></button>
+                                            </div>
+                                        </div>
+                                        <div className="details2">
+                                            <span className="box">
+                                                Best Price
+                                                <h2>$ {product.price}</h2>
+                                            </span>
+                                            <span className="box">
+                                                Status{' '}
+                                                <h2>{product.countInStock > 0 ? 'In Stock' : 'Unavailable.'}</h2>
+                                            </span>
+                                            <div className="box">
+                                                <span>
+                                                    Quantity
+                                                    <br></br>
+                                                    <select className="select" value={qty} onChange={(e) => { setQty(e.target.value) }}>
+                                                        {[...Array(product.countInStock).keys()].map(x =>
+                                                            <option key={x + 1} value={x + 1}>{x + 1}</option>
+                                                        )}
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                        <div>
+                                            {product.countInStock > 0 && (
+                                                <button
+                                                    onClick={handleAddToCart}
+                                                    className="button-add-to-cart"
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            )}
+                                        </div>
+                                    </Col>
+                                    <div className="divider-new" />
+                                </Row>
                             </div>
-                        </div>
-                    </Col>
-                    <div className="divider-new" />
-                </Row>
-            </div>
-            <div className="details2">
-                <div className="details-action">
-                    <ul>
-                        <li>
-                            Best Price<br></br>
-                            <b>$ {product.price}</b>
-                        </li>
-                        <li>
-                            Status: {product.status}
-                        </li>
-                        <li>
-                            Qty: <select>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </li>
-                        <li>
-                            <button>Add to cart</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                        </>
+                    )
+            }
         </>
         // </div >
     )
 }
 
-export default HomeScreen
+export default ProductScreen
