@@ -7,6 +7,13 @@ import { signin } from '../actions/userActions';
 function ProductsScreen(props) {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
+    const [brand, setBrand] = useState('');
+    const [category, setCategory] = useState('');
+    const [countInStock, setCountInStock] = useState('');
+    const [description, setDescription] = useState('');
+    const [rating, setRating] = useState('');
+    const [numReview, setNumReview] = useState('');
     const productSave = useSelector(state => state.productSave)
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
     const dispatch = useDispatch();
@@ -39,6 +46,48 @@ function ProductsScreen(props) {
                     </label>
                     <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
                 </li>
+                <li>
+                    <label htmlFor="name">
+                        Price
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Image
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Brand
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Category
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Rating
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Num Reviews
+                    </label>
+                    <input type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Description
+                    </label>
+                    <textarea type="email" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
+                </li>
 
                 <li>
                     <button type="submit" className="button-primary">Create</button>
@@ -50,3 +99,4 @@ function ProductsScreen(props) {
 }
 
 export default ProductsScreen;
+
